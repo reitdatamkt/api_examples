@@ -1,0 +1,66 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v4.1.0
+      hooks:
+        - id: detect-private-key
+        - id: check-added-large-files
+        - id: check-case-conflict
+        - id: check-merge-conflict
+        - id: end-of-file-fixer
+        - id: fix-byte-order-marker
+        - id: trailing-whitespace
+        - id: mixed-line-ending
+        - id: check-shebang-scripts-are-executable
+        - id: check-executables-have-shebangs
+        - id: check-json
+        - id: check-toml
+        - id: check-xml
+        - id: check-yaml
+        - id: pretty-format-json
+          args: [--autofix, --no-sort-keys]
+        - id: check-ast
+        - id: requirements-txt-fixer
+        - id: debug-statements
+
+    # Terraform formatter
+    - repo: https://github.com/antonbabenko/pre-commit-terraform.git
+      rev: v1.72.1
+      hooks:
+        - id: terraform_fmt
+
+    # Python formatters & linters
+    - repo: https://github.com/psf/black
+      rev: 22.3.0
+      hooks:
+        - id: black
+    - repo: https://github.com/klen/pylama
+      rev: 8.0.0
+      hooks:
+       - id: pylama
+         additional_dependencies:
+          - pyflakes==2.4.0
+    - repo: https://github.com/pycqa/pydocstyle
+      rev: 6.0.0
+      hooks:
+        - id: pydocstyle
+          args:
+            - --convention=google
+            - --add-ignore=D100,D104,D202
+    - repo: https://github.com/pycqa/isort
+      rev: 5.12.0
+      hooks:
+        - id: isort
+    - repo: https://github.com/pre-commit/mirrors-mypy
+      rev: v1.0.1
+      hooks:
+        - id: mypy
+          name: mypy
+          exclude: test_.*
+          additional_dependencies: [types-requests, types-python-dateutil]
+    - repo: https://github.com/nbQA-dev/nbQA.git
+      rev: 1.2.3
+      hooks:
+        - id: nbqa-black
+        - id: nbqa-isort
